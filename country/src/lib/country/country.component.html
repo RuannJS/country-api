@@ -1,0 +1,16 @@
+<p>country works!</p>
+
+<button routerLink=".." type="button">Back</button>
+
+<div *ngIf="country$ | async as country">
+  <img [src]="country.flags.svg" alt="" />
+
+  <div class="flex flex-row flex-wrap gap-5">
+    <ng-container *ngIf="country.borders; else elseTemplate">
+      <span *ngFor="let item of country.borders">
+        {{ countryCodes[item] }}
+      </span>
+    </ng-container>
+    <ng-template #elseTemplate> No Borders </ng-template>
+  </div>
+</div>
