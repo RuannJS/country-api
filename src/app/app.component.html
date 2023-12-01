@@ -1,3 +1,7 @@
-<main class="dark">
+<main [ngClass]="{ dark: darkMode }">
+  <div class="">
+    <button (click)="toggleMode()">Dark mode</button>
+  </div>
+
   <router-outlet></router-outlet>
 </main>
