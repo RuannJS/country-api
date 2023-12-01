@@ -1,10 +1,33 @@
-<div class="flex flex-col gap-5">
-  <div
-    ngClass="bg-black  text-white dark:bg-red-500"
-    *ngFor="let country of countryList$ | async"
-    class=""
-    [routerLink]="country.cca3"
-  >
-    {{ country.name.common }}
+<section>
+  <div class="flex flex-row justify-between">
+    <input
+      [(ngModel)]="currentSearchValue"
+      type="text"
+      placeholder="Search for a country..."
+      (keyup)="searchForCountry()"
+    />
+    <select #region (change)="onFilterChange(region.value)">
+      <option value="" disabled selected>Filter by Region</option>
+      <option value="all">All</option>
+      <option value="Africa">Africa</option>
+      <option value="Americas">Americas</option>
+      <option value="Asia">Asia</option>
+      <option value="Europe">Europe</option>
+      <option value="Oceania">Oceania</option>
+    </select>
   </div>
-</div>
+  <div class="flex flex-col gap-5">
+    <div
+      ngClass="bg-black  text-white dark:bg-red-500"
+      *ngFor="let country of listView$ | async"
+      class=""
+      [routerLink]="country.cca3"
+    >
+      {{ country.name.common }}
+    </div>
+    <span *ngIf="listView$ | async as country">
+      <span *ngIf="country.length === 0">No country matches.</span>
+    </span>
+  </div>
+  <div class=""></div>
+</section>

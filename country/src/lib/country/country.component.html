@@ -3,7 +3,7 @@
 <button routerLink=".." type="button">Back</button>
 
 <div *ngIf="country$ | async as country">
-  <img [src]="country.flags.svg" alt="" />
+  <img [ngSrc]="country.flags.svg" width="300" height="300" alt="" />
 
   <div class="flex flex-row flex-wrap gap-5">
     <ng-container *ngIf="country.borders; else elseTemplate">
