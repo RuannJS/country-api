@@ -32,7 +32,10 @@
 <section
   class="flex flex-col lg:px-52 sm:flex-row sm:flex-wrap sm:justify-evenly gap-y-5 mt-10 text-slate-900 dark:text-slate-100 pb-96"
 >
-  <div class="flex justify-center" *ngFor="let country of listView$ | async">
+  <div
+    class="flex justify-center hover:shadow-2xl hover:shadow-black dark:shadow-slate-100"
+    *ngFor="let country of listView$ | async"
+  >
     <div
       [routerLink]="country.cca3"
       class="flex flex-col border border-slate-200 bg-slate-50 dark:bg-slate-800 dark:border-slate-900 shadow-2xl shadow-black rounded-lg cursor-pointer"
