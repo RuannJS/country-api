@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CountriesService } from '../countries.service';
 import { Observable } from 'rxjs';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
+import { NgOptimizedImage } from '@angular/common';
 import { Country } from '../country';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'countries-app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, InfiniteScrollModule],
+  imports: [CommonModule, RouterModule, FormsModule, NgOptimizedImage],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -24,9 +24,6 @@ export class HomeComponent {
 
   currentFilter!: string;
   currentSearchValue!: string;
-
-  currentPage: number = 0;
-  totalPages!: number;
 
   onFilterChange(region: string) {
     this.currentSearchValue = '';
@@ -41,9 +38,9 @@ export class HomeComponent {
     }
   }
 
-  searchForCountry() {
-    if (this.currentSearchValue === '') {
-      this.listView$ = this.countryService.getCountries();
+  searchForCountry(event: KeyboardEvent) {
+    if (this.currentSearchValue === '' && event.key === 'Backspace') {
+      return;
     }
 
     this.listView$ = this.countryService.searchForCountry(

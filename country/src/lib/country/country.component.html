@@ -1,16 +1,113 @@
-<p>country works!</p>
-
-<button routerLink=".." type="button">Back</button>
-
-<div *ngIf="country$ | async as country">
-  <img [ngSrc]="country.flags.svg" width="300" height="300" alt="" />
-
-  <div class="flex flex-row flex-wrap gap-5">
-    <ng-container *ngIf="country.borders; else elseTemplate">
-      <span *ngFor="let item of country.borders">
-        {{ countryCodes[item] }}
+<div class="flex flex-col p-5 gap-20">
+  <div class="flex justify-start xl:justify-center">
+    <button
+      class="dark:bg-slate-800 dark:border-slate-100 dark:text-white shadow-2xl rounded-lg drop-shadow-2xl text-xl font-bold border border-slate-900 py-2 px-5 hover:underline"
+      routerLink=".."
+      type="button"
+    >
+      Go Back
+    </button>
+  </div>
+  <div
+    class="flex flex-col gap-10 font-bold text-slate-900 dark:text-slate-100"
+    *ngIf="country$ | async as country"
+  >
+    <div class="flex justify-center">
+      <img
+        class="rounded-lg shadow-2xl shadow-black"
+        [ngSrc]="country.flags.svg"
+        width="300"
+        height="300"
+        alt=""
+      />
+    </div>
+    <!-- ************ -->
+    <div class="text-center">
+      <span class="font-black text-4xl">{{ country.name.common }}</span>
+    </div>
+    <!-- ************ -->
+    <div
+      class="flex flex-col justify-start text-lg xl:flex-row xl:justify-center xl:gap-5"
+    >
+      <span class="font-bold"
+        >Native Name:
+        <span class="font-light">{{ country.name.official }}</span>
       </span>
-    </ng-container>
-    <ng-template #elseTemplate> No Borders </ng-template>
+      <span class="font-bold"
+        >Population:
+        <span class="font-light">{{
+          country.population.toLocaleString('pt-BR')
+        }}</span>
+      </span>
+      <span class="font-bold"
+        >Region:
+        <span class="font-light">{{ country.region }}</span>
+      </span>
+      <span class="font-bold"
+        >Sub Region:
+        <span class="font-light">{{ country.subregion }}</span>
+      </span>
+      <span class="font-bold"
+        >Capital:
+        <span class="font-light">{{ country.capital }}</span>
+      </span>
+    </div>
+    <!-- ************ -->
+    <div class="flex flex-col justify-start text-lg">
+      <div class="xl:flex xl:justify-center xl:gap-5">
+        <span class="font-bold"
+          >Top Level Domains:
+
+          <span *ngFor="let domain of country.tld" class="font-light mr-2">{{
+            domain
+          }}</span>
+        </span>
+        <span class="font-bold"
+          >Currencies:
+          <span class="font-light">
+            {{ countryCurrency }}
+          </span>
+        </span>
+        <span class="font-bold"
+          >Languages:
+
+          <span
+            *ngFor="let language of countryLanguages"
+            class="font-light mr-2"
+            >{{ language }}</span
+          >
+        </span>
+      </div>
+    </div>
+
+    <!-- ************ -->
+    <div class="flex flex-col pb-44">
+      <span class="text-xl xl:text-center xl:text-3xl">Border Countries:</span>
+      <div class="flex flex-row flex-wrap mt-10 gap-5 items-center xl:flex-col">
+        <ng-container *ngIf="!country.borders">
+          <button
+            class="rounded-lg border border-slate-900 px-5 py-2 dark:border-slate-100 hover:underline hover:bg-slate-300 hover:dark:bg-slate-700"
+            type="button"
+          >
+            None
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="country.borders">
+          <div
+            (click)="redirectTo(item)"
+            type="button"
+            *ngFor="let item of country.borders"
+          >
+            <button
+              class="rounded-lg border border-slate-900 px-5 py-2 dark:border-slate-100 hover:underline hover:bg-slate-300 hover:dark:bg-slate-700"
+              type="button"
+            >
+              {{ countryCodes[item] }}
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </div>

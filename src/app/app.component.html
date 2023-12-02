@@ -1,7 +1,32 @@
 <main [ngClass]="{ dark: darkMode }">
-  <div class="">
-    <button (click)="toggleMode()">Dark mode</button>
-  </div>
+  <section class="bg-slate-100 dark:bg-slate-900">
+    <nav
+      class="flex flex-row justify-between xl:justify-around items-center text-xl xl:text-2xl text-slate-950 p-5 bg-slate-100 dark:bg-slate-900 dark:text-slate-50"
+    >
+      <span class="font-black">Where in the World?</span>
 
-  <router-outlet></router-outlet>
+      <button
+        class="flex flex-row items-center gap-2 border border-slate-900 py-3 px-5 rounded-lg hover:underline hover:bg-slate-700 dark:border-slate-100"
+        (click)="toggleMode()"
+      >
+        <img
+          *ngIf="!darkMode"
+          width="20"
+          src="../assets/icons/light-mode.svg"
+          alt="light mode"
+        />
+
+        <img
+          *ngIf="darkMode"
+          width="20"
+          src="../assets/icons/dark-mode.svg"
+          alt="dark mode"
+        />
+        <span class="font-black" *ngIf="!darkMode">Dark Mode</span>
+        <span class="font-black" *ngIf="darkMode"> Light Mode</span>
+      </button>
+    </nav>
+
+    <router-outlet></router-outlet>
+  </section>
 </main>

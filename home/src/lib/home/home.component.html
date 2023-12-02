@@ -1,33 +1,76 @@
-<section>
-  <div class="flex flex-row justify-between">
-    <input
-      [(ngModel)]="currentSearchValue"
-      type="text"
-      placeholder="Search for a country..."
-      (keyup)="searchForCountry()"
-    />
-    <select #region (change)="onFilterChange(region.value)">
-      <option value="" disabled selected>Filter by Region</option>
-      <option value="all">All</option>
-      <option value="Africa">Africa</option>
-      <option value="Americas">Americas</option>
-      <option value="Asia">Asia</option>
-      <option value="Europe">Europe</option>
-      <option value="Oceania">Oceania</option>
-    </select>
-  </div>
-  <div class="flex flex-col gap-5">
-    <div
-      ngClass="bg-black  text-white dark:bg-red-500"
-      *ngFor="let country of listView$ | async"
-      class=""
-      [routerLink]="country.cca3"
-    >
-      {{ country.name.common }}
+<section
+  class="bg-slate-100 text-slate-900 dark:bg-slate-900 dark:text-slate-100 flex flex-col gap-5"
+>
+  <div class="flex flex-col lg:flex-row lg:justify-around gap-5 px-5">
+    <div class="">
+      <input
+        class="lg:w-96 drop-shadow-xl rounded-md bg-white py-3 px-3 border border-slate-900 dark:border dark:border-slate-900 dark:bg-slate-700 placeholder:pl-3 placeholder:font-medium placeholder:text-slate-500 placeholder:dark:text-slate-100"
+        [(ngModel)]="currentSearchValue"
+        type="text"
+        placeholder="Search for a country..."
+        (keyup)="searchForCountry($event)"
+      />
     </div>
-    <span *ngIf="listView$ | async as country">
-      <span *ngIf="country.length === 0">No country matches.</span>
-    </span>
+    <div class="lg:mr-10">
+      <select
+        class="rounded-md bg-white py-3 px-3 border border-slate-900 dark:border dark:border-slate-900 dark:bg-slate-700 placeholder:pl-3 placeholder:font-medium placeholder:text-slate-500 placeholder:dark:text-slate-100"
+        #region
+        (change)="onFilterChange(region.value)"
+      >
+        <option value="" disabled selected>Filter by Region</option>
+        <option value="all">All</option>
+        <option value="Africa">Africa</option>
+        <option value="Americas">Americas</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Oceania">Oceania</option>
+      </select>
+    </div>
   </div>
-  <div class=""></div>
 </section>
+
+<section
+  class="flex flex-col lg:px-52 sm:flex-row sm:flex-wrap sm:justify-evenly gap-y-5 mt-10 text-slate-900 dark:text-slate-100 pb-96"
+>
+  <div class="flex justify-center" *ngFor="let country of listView$ | async">
+    <div
+      [routerLink]="country.cca3"
+      class="flex flex-col border border-slate-200 bg-slate-50 dark:bg-slate-800 dark:border-slate-900 shadow-2xl shadow-black rounded-lg cursor-pointer"
+    >
+      <img
+        class="rounded-t-lg h-auto"
+        [ngSrc]="country.flags.svg"
+        width="300"
+        height="300"
+        [alt]="country.name.common"
+      />
+      <div class="p-5 py-5">
+        <span class="font-black text-xl">{{ country.name.common }}</span>
+        <div class="mt-5 flex flex-col">
+          <span class="font-bold"
+            >Population:
+            <span class="font-light">{{
+              country.population.toLocaleString('pt-BR')
+            }}</span></span
+          >
+          <span class="font-bold"
+            >Region: <span class="font-light">{{ country.region }}</span></span
+          >
+          <span class="font-bold"
+            >Capital:
+            <span class="font-light">{{ country.capital }}</span></span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="text-center pb-96">
+  <span *ngIf="listView$ | async as countries">
+    <span
+      class="text-slate-900 font-black text-6xl dark:text-slate-100"
+      *ngIf="countries.length === 0"
+      >No country was found.</span
+    >
+  </span>
+</div>

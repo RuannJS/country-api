@@ -4,16 +4,17 @@ export interface Country {
     official: string;
   };
   flags: { svg: string; png: string };
-  nativeName: string;
   population: number;
   region: string;
-  subRegion: string;
+  subregion: string;
   capital: string;
-  topLevelDomain: string[];
-  currencies: [{ code: string; name: string; symbol: string }];
-  languages: [
-    { iso639_1: string; iso639_2: string; name: string; nativeName: string }
-  ];
+  tld: string[];
+  currencies: {
+    code: {
+      name: string;
+    };
+  };
+  languages: {};
   borders: string[];
   cca3: string;
 }
